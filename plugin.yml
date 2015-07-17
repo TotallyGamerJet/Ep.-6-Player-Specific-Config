@@ -1,0 +1,5 @@
+name: PlayerConfig
+main: com.player.specific.config.Main
+version: 0.1
+author: TotallyGamerJet
+description: Creates Player Specific Config
