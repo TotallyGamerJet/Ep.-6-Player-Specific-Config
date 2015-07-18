@@ -2,6 +2,7 @@ package com.player.specific.config.events;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -29,14 +30,14 @@ public class PlayerJoin implements Listener {
 			f.set("name", p.getName());
 			f.set("uuid", p.getUniqueId().toString());
 			Date now = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 			f.set("join_date", format.format(now));
 			f.set("last_join", format.format(now));
 			cm.saveConfig();
 		} else {
 			FileConfiguration f = cm.getConfig();
 			Date now = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH);
 			f.set("last_join", format.format(now));
 			cm.saveConfig();
 		}
