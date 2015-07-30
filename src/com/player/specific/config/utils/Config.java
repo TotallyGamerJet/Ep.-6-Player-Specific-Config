@@ -3,22 +3,27 @@ package com.player.specific.config.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.player.specific.config.Main;
 
 public class Config {
 
-	private Main plugin; // Plugin Main Class
 	private String n;
 	private FileConfiguration fc;
 	private File file;
+	private static final JavaPlugin plugin = new Main(); //Change 'Main()' to the name of the class that extends JavaPlugin
+	private static List<Config> configs = new ArrayList<>();
 
-	public Config(Main plugin, String n) {
-		this.plugin = plugin;
+	public Config(String n) {
 		this.n = n;
+
+		configs.add(this);
 	}
 
 	/**
@@ -36,6 +41,32 @@ public class Config {
 		return n;
 	}
 	
+	/**
+	 * Returns an instanceof the JavaPlugin.
+	 * @return
+	 */
+	public static JavaPlugin getInstance() {
+		return plugin;
+	}
+	
+	/**
+	 * Get a config from type 'Config'. If it doesn't exist it will create a new Config. NOTE: String n must be exactly the Config's name.
+	 * 
+	 * @param n
+	 *            The Name of the config found by getName()
+	 * @return Config for given name.
+	 */
+	public Config getConfig(String n) {
+		if (configs.contains(n)) {
+			for (int i = 0; i < configs.size(); i++) {
+				if (configs.get(i).getName().equals(n)) {
+					return configs.get(i);
+				}
+			}
+		}
+		return new Config(n);
+	}
+
 	/**
 	 * Deletes the file
 	 * 
@@ -74,11 +105,11 @@ public class Config {
 	 */
 	public File getDataFolder() {
 		File dir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
-		File d = new File(dir.getParentFile().getPath(), plugin.getName());
-		if(!d.exists()) {
+		File d = new File(dir.getParentFile().getPath(), getInstance().getName());
+		if (!d.exists()) {
 			d.mkdirs();
 		}
-	    return d ;
+		return d;
 	}
 
 	/**

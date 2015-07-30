@@ -2,23 +2,28 @@ package com.player.specific.config.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import com.player.specific.config.Main;
 
 public class ConfigManager {
-
-	private Main plugin; // Plugin Main Class
-	private Player p;
+	
+	private final Player p;
 	private FileConfiguration fc;
 	private File file;
+	private static final JavaPlugin plugin = new Main(); //Change 'Main()' to the name of the class that extends JavaPlugin
+	private static List<ConfigManager> configs = new ArrayList<>();
 
-	public ConfigManager(Main plugin, Player p) {
-		this.plugin = plugin;
+	private ConfigManager(Player p) {
 		this.p = p;
+
+		configs.add(this);
 	}
 
 	/**
@@ -31,10 +36,46 @@ public class ConfigManager {
 			try {
 				throw new Exception();
 			} catch (Exception e) {
-				plugin.logger.warning("ERR Player is Null!");
+				getInstance().getLogger().warning("ERR... Player is Null!");
 				e.printStackTrace();
 			}
 		return p;
+	}
+	
+	/**
+	 * Returns an instanceof the JavaPlugin. AKA the Main class.
+	 * @return
+	 */
+	public JavaPlugin getInstance() {
+		if (plugin == null)
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		return plugin;
+	}
+
+	/**
+	 * Get a config from type 'ConfigManager'. If it doesn't exist it will
+	 * create a new ConfigManager. NOTE: String 'n' must be exactly the
+	 * ConfigManager's name. Creates thread safe. So there is only one
+	 * instanceof this class ever.
+	 * 
+	 * @param p
+	 *            The Player of the config found by getOwner()
+	 * @return Config for given player.
+	 */
+	public static ConfigManager getConfig(Player p) {
+		if (configs.contains(p)) {
+			for (int i = 0; i < configs.size(); i++) {
+				if (configs.get(i).getOwner().equals(p)) {
+					return configs.get(i);
+				}
+			}
+		}
+		return new ConfigManager(p);
 	}
 
 	/**
@@ -67,6 +108,8 @@ public class ConfigManager {
 		}
 		return true;
 	}
+	
+	
 
 	/**
 	 * Gets the plugin's folder. If none exists it will create it.
@@ -74,12 +117,12 @@ public class ConfigManager {
 	 * @return The folder as type java.io.File
 	 */
 	public File getDataFolder() {
-		File dir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
-		File d = new File(dir.getParentFile().getPath(), plugin.getName());
-		if(!d.exists()) {
+		File dir = new File(ConfigManager.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
+		File d = new File(dir.getParentFile().getPath(), getInstance().getName());
+		if (!d.exists()) {
 			d.mkdirs();
 		}
-	    return d ;
+		return d;
 	}
 
 	/**

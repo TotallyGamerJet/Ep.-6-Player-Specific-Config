@@ -10,21 +10,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.player.specific.config.Main;
 import com.player.specific.config.utils.ConfigManager;
 
 public class PlayerJoin implements Listener {
 
-	private Main plugin;
-
-	public PlayerJoin(Main plugin) {
-		this.plugin = plugin;
-	}
-
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
-		ConfigManager cm = new ConfigManager(plugin, p);
+		ConfigManager cm = ConfigManager.getConfig(p);
 		if (!cm.exists()) {
 			FileConfiguration f = cm.getConfig();
 			f.set("name", p.getName());

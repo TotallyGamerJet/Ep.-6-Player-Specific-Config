@@ -11,14 +11,13 @@ import com.player.specific.config.events.PlayerJoin;
 
 public class Main extends JavaPlugin {
 
-	public Main plugin;
 	public Logger logger = Logger.getLogger("Minecraft");
 
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = getDescription();
 		logger.info(pdfFile.getName() + " Has Been Enabled! Version: " + pdfFile.getVersion());
 		PluginManager pm = Bukkit.getPluginManager();
-		pm.registerEvents(new PlayerJoin(this), this);
+		pm.registerEvents(new PlayerJoin(), this);
 	}
 
 	public void onDisable() {
