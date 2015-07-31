@@ -58,7 +58,7 @@ public class Config {
 	 * @return Config for given name.
 	 */
 	public static Config getConfig(String n) {
-		if (configs.contains(n)) {
+		if (configs != null) {
 			for (int i = 0; i < configs.size(); i++) {
 				if (configs.get(i).getName().equals(n)) {
 					return configs.get(i);

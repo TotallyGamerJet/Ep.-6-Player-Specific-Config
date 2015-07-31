@@ -68,7 +68,7 @@ public class ConfigManager {
 	 * @return Config for given player.
 	 */
 	public static ConfigManager getConfig(Player p) {
-		if (configs.contains(p)) {
+		if (configs != null) {
 			for (int i = 0; i < configs.size(); i++) {
 				if (configs.get(i).getOwner().equals(p)) {
 					return configs.get(i);
