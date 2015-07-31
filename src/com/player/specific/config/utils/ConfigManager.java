@@ -69,11 +69,11 @@ public class ConfigManager {
 	 */
 	public static ConfigManager getConfig(Player p) {
 		if (configs != null) {
-			for (int i = 0; i < configs.size(); i++) {
-				if (configs.get(i).getOwner().equals(p)) {
-					return configs.get(i);
-				}
-			}
+			for (ConfigManager c : configs) {
+	            if (c.getOwner() == p) {
+	                return c;
+	            }
+	        }
 		}
 		return new ConfigManager(p);
 	}

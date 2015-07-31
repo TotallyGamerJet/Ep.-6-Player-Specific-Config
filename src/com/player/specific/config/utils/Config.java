@@ -59,11 +59,11 @@ public class Config {
 	 */
 	public static Config getConfig(String n) {
 		if (configs != null) {
-			for (int i = 0; i < configs.size(); i++) {
-				if (configs.get(i).getName().equals(n)) {
-					return configs.get(i);
-				}
-			}
+			for (Config c : configs) {
+	            if (c.getName() == n) {
+	                return c;
+	            }
+	        }
 		}
 		return new Config(n);
 	}
