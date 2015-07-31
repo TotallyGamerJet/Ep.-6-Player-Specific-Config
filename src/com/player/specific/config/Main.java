@@ -11,7 +11,7 @@ import com.player.specific.config.events.PlayerJoin;
 
 public class Main extends JavaPlugin {
 
-	public Logger logger = Logger.getLogger("Minecraft");
+	public Logger logger = getLogger();
 
 	public void onEnable() {
 		PluginDescriptionFile pdfFile = getDescription();

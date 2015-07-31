@@ -56,7 +56,7 @@ public class Config {
 	 *            The Name of the config found by getName()
 	 * @return Config for given name.
 	 */
-	public Config getConfig(String n) {
+	public static Config getConfig(String n) {
 		if (configs.contains(n)) {
 			for (int i = 0; i < configs.size(); i++) {
 				if (configs.get(i).getName().equals(n)) {

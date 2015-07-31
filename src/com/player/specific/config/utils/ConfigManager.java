@@ -45,6 +45,7 @@ public class ConfigManager {
 	/**
 	 * Returns an instanceof the JavaPlugin. AKA the Main class.
 	 * @return
+	 * 	The class that extends JavaPlugin
 	 */
 	public JavaPlugin getInstance() {
 		if (plugin == null)
