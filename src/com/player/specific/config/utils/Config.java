@@ -11,8 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.player.specific.config.Main;
-
 public class Config {
 
 	private String n;
@@ -103,7 +101,7 @@ public class Config {
 	 * @return The folder as type java.io.File
 	 */
 	public File getDataFolder() {
-		File dir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
+		File dir = new File(Config.class.getProtectionDomain().getCodeSource().getLocation().getPath().replaceAll("%20", " "));
 		File d = new File(dir.getParentFile().getPath(), getInstance().getName());
 		if (!d.exists()) {
 			d.mkdirs();
