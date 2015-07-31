@@ -5,19 +5,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import com.player.specific.config.Main;
 
 public class ConfigManager {
 	
 	private final Player p;
 	private FileConfiguration fc;
 	private File file;
-	private static final JavaPlugin plugin = new Main(); //Change 'Main()' to the name of the class that extends JavaPlugin
+	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
 	private static List<ConfigManager> configs = new ArrayList<>();
 
 	private ConfigManager(Player p) {

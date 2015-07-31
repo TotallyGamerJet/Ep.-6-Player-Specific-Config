@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +18,7 @@ public class Config {
 	private String n;
 	private FileConfiguration fc;
 	private File file;
-	private static final JavaPlugin plugin = new Main(); //Change 'Main()' to the name of the class that extends JavaPlugin
+	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
 	private static List<Config> configs = new ArrayList<>();
 
 	public Config(String n) {
