@@ -68,13 +68,11 @@ public class ConfigManager {
 	 * @return Config for given player.
 	 */
 	public static ConfigManager getConfig(Player p) {
-		if (configs != null) {
-			for (ConfigManager c : configs) {
-	            if (c.getOwner() == p) {
-	                return c;
+		for (ConfigManager c : configs) {
+	           if (c.getOwner().getUniqueId().equals(p.getUniqueId())) {
+	               return c;
 	            }
-	        }
-		}
+	    }
 		return new ConfigManager(p);
 	}
 
@@ -154,6 +152,7 @@ public class ConfigManager {
 		if (fc == null) {
 			fc = YamlConfiguration.loadConfiguration(getFile());
 		}
+		getInstance().getLogger().info("LOADED CONFIG");
 		return fc;
 	}
 

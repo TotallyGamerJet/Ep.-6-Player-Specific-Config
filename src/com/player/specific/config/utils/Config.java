@@ -58,13 +58,11 @@ public class Config {
 	 * @return Config for given name.
 	 */
 	public static Config getConfig(String n) {
-		if (configs != null) {
-			for (Config c : configs) {
-	            if (c.getName() == n) {
-	                return c;
-	            }
+		for (Config c : configs) {
+	         if (c.getName().equals(n)) {
+	             return c;
 	        }
-		}
+	    }
 		return new Config(n);
 	}
 
