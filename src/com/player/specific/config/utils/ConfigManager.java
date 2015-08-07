@@ -53,7 +53,6 @@ public class ConfigManager {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-
 		return plugin;
 	}
 
@@ -152,7 +151,6 @@ public class ConfigManager {
 		if (fc == null) {
 			fc = YamlConfiguration.loadConfiguration(getFile());
 		}
-		getInstance().getLogger().info("LOADED CONFIG");
 		return fc;
 	}
 

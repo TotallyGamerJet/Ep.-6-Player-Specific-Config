@@ -45,6 +45,12 @@ public class Config {
 	 * @return
 	 */
 	public static JavaPlugin getInstance() {
+		if (plugin == null)
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		return plugin;
 	}
 	
