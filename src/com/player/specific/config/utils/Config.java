@@ -19,7 +19,7 @@ public class Config {
 	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
 	private static List<Config> configs = new ArrayList<>();
 
-	public Config(String n) {
+	private Config(String n) {
 		this.n = n;
 
 		configs.add(this);
