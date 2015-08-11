@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,16 +14,22 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigManager {
 	
-	private final Player p;
+	private final UUID p;
 	private FileConfiguration fc;
 	private File file;
 	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
 	private static List<ConfigManager> configs = new ArrayList<>();
 
 	private ConfigManager(Player p) {
-		this.p = p;
+		this.p = p.getUniqueId();
 
 		configs.add(this);
+	}
+	
+	private ConfigManager(UUID u) {
+		this.p = u;
+
+		configs.add(this);	
 	}
 
 	/**
@@ -31,6 +38,23 @@ public class ConfigManager {
 	 * @return The player as type bukkit.entity.Player
 	 */
 	public Player getOwner() {
+		if (p == null)
+			try {
+				throw new Exception();
+			} catch (Exception e) {
+				getInstance().getLogger().warning("ERR... Player is Null!");
+				e.printStackTrace();
+			}
+		return Bukkit.getServer().getPlayer(p);
+	}
+	
+	/**
+	 * Gets the owner of the config as UUID
+	 * 
+	 * @return
+	 * 	java.util.UUID
+	 */
+	public UUID getOwnerUUID() {
 		if (p == null)
 			try {
 				throw new Exception();
@@ -58,7 +82,7 @@ public class ConfigManager {
 
 	/**
 	 * Get a config from type 'ConfigManager'. If it doesn't exist it will
-	 * create a new ConfigManager. NOTE: String 'n' must be exactly the
+	 * create a new ConfigManager. NOTE: Player 'p' must be exactly the
 	 * ConfigManager's name. Creates thread safe. So there is only one
 	 * instanceof this class ever.
 	 * 
@@ -68,11 +92,32 @@ public class ConfigManager {
 	 */
 	public static ConfigManager getConfig(Player p) {
 		for (ConfigManager c : configs) {
-	           if (c.getOwner().getUniqueId().equals(p.getUniqueId())) {
+	           if (c.getOwnerUUID().equals(p.getUniqueId())) {
 	               return c;
 	            }
 	    }
 		return new ConfigManager(p);
+	}
+	
+	/**
+	 * Get a config from type 'ConfigManager'. If it doesn't exist it will
+	 * create a new ConfigManager. NOTE: UUID 'u' must be exactly the
+	 * ConfigManager's name. Creates thread safe. So there is only one
+	 * instanceof this class ever.
+	 * 
+	 * @param u
+	 * 	The UUID of the player who is the owner of the config
+	 * 
+	 * @return
+	 * 	Config for given UUID
+	 */
+	public static ConfigManager getConfig(UUID u) {
+		for (ConfigManager c : configs) {
+	           if (c.getOwnerUUID().equals(u)) {
+	               return c;
+	            }
+	    }
+		return new ConfigManager(u);
 	}
 
 	/**
