@@ -45,7 +45,7 @@ public class ConfigManager {
 				getInstance().getLogger().warning("ERR... Player is Null!");
 				e.printStackTrace();
 			}
-		return Bukkit.getServer().getPlayer(u);
+		return Bukkit.getPlayer(u);
 	}
 	
 	/**
