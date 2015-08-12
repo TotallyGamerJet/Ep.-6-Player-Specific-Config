@@ -14,20 +14,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class ConfigManager {
 	
-	private final UUID p;
+	private final UUID u;
 	private FileConfiguration fc;
 	private File file;
 	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
 	private static List<ConfigManager> configs = new ArrayList<>();
 
 	private ConfigManager(Player p) {
-		this.p = p.getUniqueId();
+		this.u = p.getUniqueId();
 
 		configs.add(this);
 	}
 	
 	private ConfigManager(UUID u) {
-		this.p = u;
+		this.u = u;
 
 		configs.add(this);	
 	}
@@ -38,14 +38,14 @@ public class ConfigManager {
 	 * @return The player as type bukkit.entity.Player
 	 */
 	public Player getOwner() {
-		if (p == null)
+		if (u == null)
 			try {
 				throw new Exception();
 			} catch (Exception e) {
 				getInstance().getLogger().warning("ERR... Player is Null!");
 				e.printStackTrace();
 			}
-		return Bukkit.getServer().getPlayer(p);
+		return Bukkit.getServer().getPlayer(u);
 	}
 	
 	/**
@@ -55,14 +55,14 @@ public class ConfigManager {
 	 * 	java.util.UUID
 	 */
 	public UUID getOwnerUUID() {
-		if (p == null)
+		if (u == null)
 			try {
 				throw new Exception();
 			} catch (Exception e) {
 				getInstance().getLogger().warning("ERR... Player is Null!");
 				e.printStackTrace();
 			}
-		return p;
+		return u;
 	}
 	
 	/**
