@@ -17,7 +17,7 @@ public class ConfigManager {
 	private final UUID u;
 	private FileConfiguration fc;
 	private File file;
-	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
+	private final JavaPlugin plugin = JavaPlugin.getProvidingPlugin(this.getClass());
 	private static List<ConfigManager> configs = new ArrayList<>();
 
 	private ConfigManager(Player p) {
@@ -174,7 +174,7 @@ public class ConfigManager {
 	 */
 	public File getFile() {
 		if (file == null) {
-			file = new File(getDataFolder(), getOwner().getUniqueId().toString() + ".yml");
+			file = new File(getDataFolder(), getOwnerUUID() + ".yml");
 			if (!file.exists()) {
 				try {
 					file.createNewFile();
