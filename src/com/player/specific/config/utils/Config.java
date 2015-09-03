@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,7 +15,7 @@ public class Config {
 	private String n;
 	private FileConfiguration fc;
 	private File file;
-	private static final JavaPlugin plugin = (JavaPlugin) Bukkit.getPluginManager().getPlugin("PlayerConfig"); //Change "PlayerConfig" to the name of your plugin found in plugin.yml
+	private final JavaPlugin plugin = JavaPlugin.getProvidingPlugin(this.getClass());
 	private static List<Config> configs = new ArrayList<>();
 
 	private Config(String n) {
@@ -44,7 +43,7 @@ public class Config {
 	 * Returns an instanceof the JavaPlugin.
 	 * @return
 	 */
-	public static JavaPlugin getInstance() {
+	public JavaPlugin getInstance() {
 		if (plugin == null)
 			try {
 				throw new Exception();
@@ -77,10 +76,7 @@ public class Config {
 	 *         wrong it returns false
 	 */
 	public boolean delete() {
-		if (getFile().delete()) {
-			return true;
-		}
-		return false;
+		return getFile().delete();
 	}
 
 	/**
@@ -94,9 +90,8 @@ public class Config {
 			File temp = new File(getDataFolder(), getName() + ".yml");
 			if (!temp.exists()) {
 				return false;
-			} else {
-				file = temp;
 			}
+				file = temp;
 		}
 		return true;
 	}
