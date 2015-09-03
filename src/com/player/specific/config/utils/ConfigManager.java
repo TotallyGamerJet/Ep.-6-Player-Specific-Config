@@ -127,10 +127,7 @@ public class ConfigManager {
 	 *         wrong it returns false
 	 */
 	public boolean delete() {
-		if (getFile().delete()) {
-			return true;
-		}
-		return false;
+		return getFile().delete();
 	}
 
 	/**
