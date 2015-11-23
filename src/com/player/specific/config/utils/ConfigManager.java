@@ -138,7 +138,7 @@ public class ConfigManager {
 	 */
 	public boolean exists() {
 		if (fc == null || file == null) {
-			File temp = new File(getDataFolder(), getOwner() + ".yml");
+			File temp = new File(getDataFolder(), getOwnerUUID() + ".yml");
 			if (!temp.exists()) {
 				return false;
 			} else {
